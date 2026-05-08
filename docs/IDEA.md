@@ -315,72 +315,9 @@ classDiagram
 
 ---
 
-## 6. Padrão Decorator – Extras na Reserva
-
-```mermaid
-classDiagram
-    direction TB
-
-    class ReservaComponent {
-        <<interface>>
-        +getDescricao() String
-        +getCusto() double
-    }
-
-    class ReservaBase {
-        -sala: Sala
-        -usuario: Usuario
-        -horario: LocalDateTime
-        +getDescricao() String
-        +getCusto() double
-    }
-
-    class ReservaDecorator {
-        <<abstract>>
-        -wrapped: ReservaComponent
-        +ReservaDecorator(r: ReservaComponent)
-        +getDescricao() String
-        +getCusto() double
-    }
-
-    class EquipamentoMultimidiaDecorator {
-        -descricaoEquip: String
-        -custoEquip: double
-        +getDescricao() String
-        +getCusto() double
-    }
-
-    class ServicoLimpezaDecorator {
-        -alertaEquipe: boolean
-        +getDescricao() String
-        +getCusto() double
-        +agendarAlerta() void
-    }
-
-    class CafeBreakDecorator {
-        -qtdPessoas: int
-        +getDescricao() String
-        +getCusto() double
-    }
-
-    class GravacaoAulaDecorator {
-        -resolucao: String
-        +getDescricao() String
-        +getCusto() double
-    }
-
-    ReservaBase ..|> ReservaComponent : implementa
-    ReservaDecorator ..|> ReservaComponent : implementa
-    ReservaDecorator o--> ReservaComponent : wraps
-    EquipamentoMultimidiaDecorator --|> ReservaDecorator : extends
-    ServicoLimpezaDecorator --|> ReservaDecorator : extends
-    CafeBreakDecorator --|> ReservaDecorator : extends
-    GravacaoAulaDecorator --|> ReservaDecorator : extends
-```
-
 ---
 
-## 7. Integração Completa – Fluxo Principal
+## 6. Integração Completa – Fluxo Principal
 
 ```mermaid
 classDiagram
@@ -431,11 +368,6 @@ classDiagram
         +update(evento, reserva) void
     }
 
-    class ReservaComponent {
-        <<interface>>
-        +getDescricao() String
-        +getCusto() double
-    }
 
     SistemaReservas --> SalaFactory : cria salas
     SistemaReservas --> ReservaRepository : persiste
@@ -443,5 +375,4 @@ classDiagram
     SistemaReservas --> EventManager : dispara eventos
     ValidadorReserva o--> PoliticaReserva : estratégia
     EventManager o--> ReservaObserver : notifica
-    ReservaComponent <|.. ReservaDecorator : decora
 ```
