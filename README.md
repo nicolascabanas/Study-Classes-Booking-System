@@ -1,31 +1,31 @@
 # Projeto: Sistema de Reserva de Salas (POO)
 
-Protótipo funcional para gerenciamento de reservas de espaços universitários (salas de estudo e laboratórios), desenvolvido para a disciplina de **Projeto de Software Orientado a Objetos (2026)**. O foco do projeto é a aplicação prática de padrões de projeto para garantir escalabilidade e código limpo.
+Protï¿½tipo funcional para gerenciamento de reservas de espaï¿½os universitï¿½rios (salas de estudo e laboratï¿½rios), desenvolvido para a disciplina de **Projeto de Software Orientado a Objetos (2026)**. O foco do projeto ï¿½ a aplicaï¿½ï¿½o prï¿½tica de padrï¿½es de projeto para garantir escalabilidade e cï¿½digo limpo.
 
 ### Equipe
-* **Nicolas Cabanas** - [Link do GitHub]
-* **[Nome do Integrante 2]** - [Link do GitHub]
+* **Nicolas Cabanas** - https://github.com/nicolascabanas
+* **JoÃ£o Vitor Moreira Gomes** - https://github.com/jvmgomes
 
 ---
 
-### Padrões de Projeto (Design Patterns)
-Para atender aos requisitos técnicos, os seguintes padrões foram implementados:
+### Padrï¿½es de Projeto (Design Patterns)
+Para atender aos requisitos tï¿½cnicos, os seguintes padrï¿½es foram implementados:
 
-* **Factory Method**: Utilizado para gerenciar a criação de diferentes tipos de salas (Individual, Grupo e Laboratórios) sem acoplar o sistema às classes concretas.
-* **Strategy**: Implementa as políticas de detecção de colisão, permitindo alternar dinamicamente entre as regras "Primeiro a Reservar" e "Prioridade Docente".
-* **Observer**: Sistema de notificação (Push/Pull) para alertar usuários e serviços sobre alterações ou cancelamentos em tempo real.
-* **Singleton**: Repositório centralizado de dados em memória com controle de concorrência (*thread-safety*).
-* **Decorator (Opcional)**: Extensão de funcionalidades para adicionar itens extras às reservas, como projetores e serviços de limpeza.
+* **Factory Method**: Utilizado para gerenciar a criaï¿½ï¿½o de diferentes tipos de salas (Individual, Grupo e Laboratï¿½rios) sem acoplar o sistema ï¿½s classes concretas.
+* **Strategy**: Implementa as polï¿½ticas de detecï¿½ï¿½o de colisï¿½o, permitindo alternar dinamicamente entre as regras "Primeiro a Reservar" e "Prioridade Docente".
+* **Observer**: Sistema de notificaï¿½ï¿½o (Push/Pull) para alertar usuï¿½rios e serviï¿½os sobre alteraï¿½ï¿½es ou cancelamentos em tempo real.
+* **Singleton**: Repositï¿½rio centralizado de dados em memï¿½ria com controle de concorrï¿½ncia (*thread-safety*).
+* **Decorator (Opcional)**: Extensï¿½o de funcionalidades para adicionar itens extras ï¿½s reservas, como projetores e serviï¿½os de limpeza.
 
 ### Requisitos Funcionais
 * **RF-01**: Consulta de disponibilidade por intervalo de tempo.
-* **RF-02**: Gestão completa de reservas (Inclusão, Alteração e Cancelamento).
-* **RF-03**: Motor de validação para impedir conflitos de horários.
-* **RF-04**: Notificações automáticas para os envolvidos em caso de mudanças.
-* **RF-05**: Geração de relatórios diários de ocupação por sala.
+* **RF-02**: Gestï¿½o completa de reservas (Inclusï¿½o, Alteraï¿½ï¿½o e Cancelamento).
+* **RF-03**: Motor de validaï¿½ï¿½o para impedir conflitos de horï¿½rios.
+* **RF-04**: Notificaï¿½ï¿½es automï¿½ticas para os envolvidos em caso de mudanï¿½as.
+* **RF-05**: Geraï¿½ï¿½o de relatï¿½rios diï¿½rios de ocupaï¿½ï¿½o por sala.
 
 ### Estrutura do Projeto
-- `src/`: Código-fonte em C#.
-- `docs/`: Documentação complementar e diagramas UML.
-- `README.md`: Documentação principal do repositório.
+- `src/`: Cï¿½digo-fonte em C#.
+- `docs/`: Documentaï¿½ï¿½o complementar e diagramas UML.
+- `README.md`: Documentaï¿½ï¿½o principal do repositï¿½rio.
 
