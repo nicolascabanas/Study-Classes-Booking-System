@@ -1,16 +1,19 @@
 using System;
 
-public class PrioridadeDocente : IPoliticaReserva
+namespace Study_Classes_Booking_System.src.Strategies
 {
-    public bool Validar(Reserva nova, List<Reserva> existentes)
+    public class PrioridadeDocente : IPoliticaReserva
     {
-        var conflito = existentes.FirstOrDefault(e => // FirsOrDeafault() percorre a lista de salas e retorna
-        // O primeiro elemento com as características em ()
-            e.Sala.Id == nova.Sala.Id && e.Horario == nova.Horario);
+        public bool Validar(Reserva nova, List<Reserva> existentes)
+        {
+            var conflito = existentes.FirstOrDefault(e => // FirsOrDeafault() percorre a lista de salas e retorna
+            // O primeiro elemento com as características em ()
+                e.Sala.Id == nova.Sala.Id && e.Horario == nova.Horario);
 
-        if (conflito == null) return true;
-        // Professor pode sobrescrever reserva de aluno
-        return nova.Usuario.Tipo == TipoUsuario.PROFESSOR
-            && conflito.Usuario.Tipo == TipoUsuario.ALUNO;
-    }
+            if (conflito == null) return true;
+            // Professor pode sobrescrever reserva de aluno
+            return nova.Usuario.Tipo == TipoUsuario.PROFESSOR
+                && conflito.Usuario.Tipo == TipoUsuario.ALUNO;
+        }
+    }    
 }
