@@ -4,7 +4,8 @@ public class PrioridadeDocente : IPoliticaReserva
 {
     public bool Validar(Reserva nova, List<Reserva> existentes)
     {
-        var conflito = existentes.FirstOrDefault(e =>
+        var conflito = existentes.FirstOrDefault(e => // FirsOrDeafault() percorre a lista de salas e retorna
+        // O primeiro elemento com as características em ()
             e.Sala.Id == nova.Sala.Id && e.Horario == nova.Horario);
 
         if (conflito == null) return true;
