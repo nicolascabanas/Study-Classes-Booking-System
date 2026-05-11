@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Study_Classes_Booking_System.src.Models;
-using Study_Classes_Booking_System.src.Factories;
+using Study_Classes_Booking_System.src.Observers;
 
 namespace Study_Classes_Booking_System.src.Repositories
 {
@@ -13,11 +13,13 @@ namespace Study_Classes_Booking_System.src.Repositories
 		private readonly List<Reserva> _reservas;
 		private readonly List<Sala> _salasSistema;
 
+		public EventManager Notificador { get; private set; }
+
 		private ReservaRepositorySingleton()
 		{
 			_reservas = new List<Reserva>();
+			Notificador = new EventManager();
 
-			// RF-01: Cadastro inicial de salas para consulta
 			_salasSistema = new List<Sala>
 			{
 				new SalaEstudoIndividual { Id = 1, Nome = "Sala Individual A1", PrecoBase = 20.0 },
@@ -43,6 +45,7 @@ namespace Study_Classes_Booking_System.src.Repositories
 			lock (_lock)
 			{
 				_reservas.Add(reserva);
+				Notificador.Notify("ReservaCriada", reserva);
 			}
 		}
 
@@ -51,7 +54,6 @@ namespace Study_Classes_Booking_System.src.Repositories
 			return _reservas;
 		}
 
-		// RF-01: Retorna salas que não possuem reserva no intervalo de tempo
 		public List<Sala> BuscarSalasDisponiveis(DateTime inicio, DateTime fim)
 		{
 			var salasOcupadasIds = _reservas
@@ -79,7 +81,7 @@ namespace Study_Classes_Booking_System.src.Repositories
 			Console.WriteLine($"   RELATÓRIO DE OCUPAÇÃO - {hoje:dd/MM/yyyy}");
 			Console.WriteLine("==============================================");
 
-			if (reservasHoje.Count == 0)
+			if (!reservasHoje.Any())
 			{
 				Console.WriteLine("Nenhuma ocupação registrada para hoje.");
 			}
