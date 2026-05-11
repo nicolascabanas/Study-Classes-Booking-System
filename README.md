@@ -31,4 +31,4 @@ Para atender aos requisitos técnicos, os seguintes padrões foram implementados
 - `src/Observers/`: Sistema de notificações (Padrão Observer).
 - `src/Strategies/`: Regras de negócio para colisões (Padrão Strategy).
 - `src/Models/`: Entidades base do sistema.
-- `docs/`: Documentação complementar e diagramas UML. 
+- `docs/`: Documentação complementar e diagramas UML.
