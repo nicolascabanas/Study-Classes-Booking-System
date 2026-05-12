@@ -15,7 +15,7 @@ namespace Study_Classes_Booking_System.src.Services
         public void SetPolitica(IPoliticaReserva politica) => _politica = politica;
 
         public bool Validar(Reserva nova) =>
-            _politica.Validar(nova, ReservaRepository.GetInstance().ListarTodas());
+            _politica.Validar(nova, ReservaRepositorySingleton.GetInstance().ListarTodas());
             //Usando a função de validação em Strategies/IPoliticaReserva, tipo passado externamente
     }
 }

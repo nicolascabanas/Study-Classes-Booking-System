@@ -17,7 +17,7 @@ namespace Study_Classes_Booking_System
             var sala1 = SalaFactory.CriarSala("individual", 1, "Cabine 01");
             var sala2 = SalaFactory.CriarSala("laboratorio", 2, "Lab de Química");
 
-            var usuario = new Usuario { Id = 1, Nome = "Nicolas", Email = "nicolas@estudante.com" };
+            var usuario = new Usuario { Matricula = 1, Nome = "Nicolas", Email = "nicolas@estudante.com" };
 
             // Criando uma reserva e guardando no Singleton
             var novaReserva = new Reserva
@@ -25,7 +25,7 @@ namespace Study_Classes_Booking_System
                 Id = 101,
                 Sala = sala1,
                 Usuario = usuario,
-                DataReserva = DateTime.Now
+                Horario = DateTime.Now
             };
 
             repo.Adicionar(novaReserva);
