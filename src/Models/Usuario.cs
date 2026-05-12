@@ -9,7 +9,7 @@ namespace Study_Classes_Booking_System.src.Models
 
     public class Usuario
     {
-        public string Matricula { get; set; }
+        public int Matricula { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
         public TipoUsuario Tipo { get; set; }

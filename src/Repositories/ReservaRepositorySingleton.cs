@@ -25,7 +25,7 @@ namespace Study_Classes_Booking_System.src.Repositories
 			{
 				new SalaEstudoIndividual { Id = 1, Nome = "Sala Individual A1", PrecoBase = 20.0 },
 				new SalaTrabalhoGrupo { Id = 2, Nome = "Sala de Grupo B1", PrecoBase = 50.0 },
-				new LaboratorioInformatica { Id = 3, Nome = "Laborat�rio Lab 01", PrecoBase = 100.0 }
+				new Laboratorio { Id = 3, Nome = "Laboratório Lab 01", PrecoBase = 100.0 }
 			};
 		}
 
@@ -58,9 +58,9 @@ namespace Study_Classes_Booking_System.src.Repositories
 		public List<Sala> BuscarSalasDisponiveis(DateTime inicio, DateTime fim)
 		{
 			var salasOcupadasIds = _reservas
-				.Where(r => r.Status != StatusReserva.Cancelada &&
-						   ((inicio >= r.DataReserva && inicio < r.DataReserva.AddHours(2)) ||
-							(fim > r.DataReserva && fim <= r.DataReserva.AddHours(2))))
+				.Where(r => r.Status != StatusReserva.CANCELADA &&
+						   ((inicio >= r.Horario && inicio < r.Horario.AddHours(2)) ||
+							(fim > r.Horario && fim <= r.Horario.AddHours(2))))
 				.Select(r => r.Sala.Id)
 				.Distinct()
 				.ToList();
@@ -76,7 +76,7 @@ namespace Study_Classes_Booking_System.src.Repositories
 		public void GerarRelatorioDiario()
 		{
 			var hoje = DateTime.Now.Date;
-			var reservasHoje = _reservas.Where(r => r.DataReserva.Date == hoje).ToList();
+			var reservasHoje = _reservas.Where(r => r.Horario.Date == hoje).ToList();
 
 			Console.WriteLine("\n==============================================");
 			Console.WriteLine($"   RELAT�RIO DE OCUPA��O - {hoje:dd/MM/yyyy}");
