@@ -308,20 +308,11 @@ classDiagram
         +update(evento: String, reserva: Reserva) void
     }
 
-    class SistemaReservas {
-        -eventManager: EventManager
-        -repository: ReservaRepository
-        -validador: ValidadorReserva
-        +criarReserva(r: Reserva) void
-        +cancelarReserva(id: String) void
-    }
-
     NotificacaoEmailObserver ..|> ReservaObserver : implementa
     NotificacaoPushObserver ..|> ReservaObserver : implementa
     RelatorioServicoObserver ..|> ReservaObserver : implementa
     LogAuditoriaObserver ..|> ReservaObserver : implementa
     EventManager "1" o-- "0..*" ReservaObserver : notifica
-    SistemaReservas --> EventManager : dispara eventos
 ```
 
 ---
