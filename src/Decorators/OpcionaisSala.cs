@@ -1,3 +1,6 @@
+using System;
+using Study_Classes_Booking_System.src.Models;
+
 namespace Study_Classes_Booking_System.src.Decorators
 {
     public class ArCondicionadoDecorator : SalaDecorator
@@ -8,6 +11,8 @@ namespace Study_Classes_Booking_System.src.Decorators
         }
 
         public override double PrecoBase => _sala.PrecoBase + 15.0;
+        public override string GetNome() => _sala.GetNome();
+        public override int GetCapacidade() => _sala.GetCapacidade();
     }
 
     public class BebedouroDecorator : SalaDecorator
@@ -18,5 +23,8 @@ namespace Study_Classes_Booking_System.src.Decorators
         }
 
         public override double PrecoBase => _sala.PrecoBase + 10.0;
+
+        public override string GetNome() => _sala.GetNome();
+        public override int GetCapacidade() => _sala.GetCapacidade();
     }
 }
