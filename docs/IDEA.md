@@ -28,6 +28,21 @@ classDiagram
         +getCapacidade() int
     }
 
+    class SalaDecorator {
+        <<abstract>>
+        #sala: Sala
+        +getNome() String
+        +getCapacidade() int
+    }
+
+    class ArCondicionadoDecorator {
+        +getNome() String
+    }
+
+    class BebedouroDecorator {
+        +getNome() String
+    }
+
     class SalaEstudoIndividual {
         -possuiLocker: boolean
         +getNome() String
@@ -92,7 +107,11 @@ classDiagram
     SalaEstudoIndividual --|> Sala
     SalaTrabalhoGrupo --|> Sala
     Laboratorio --|> Sala
-    SalaFactoryImpl ..> Sala
+    SalaDecorator --|> Sala
+    SalaDecorator o-- Sala : wraps
+    ArCondicionadoDecorator --|> SalaDecorator
+    BebedouroDecorator --|> SalaDecorator
+    SalaFactoryImpl ..> Sala : creates
     ReservaRepository "1" o-- "0..*" Reserva
     Reserva --> Sala
     Reserva --> Usuario
@@ -115,7 +134,6 @@ classDiagram
 
     class SalaFactoryImpl {
         +criarSala(tipo: String) Sala
-        %% switch(tipo) retorna a subclasse correta
     }
 
     class Sala {
@@ -158,7 +176,7 @@ classDiagram
     SalaTrabalhoGrupo --|> Sala : extends
     Laboratorio --|> Sala : extends
     SalaVR --|> Sala : extends
-    SalaFactoryImpl ..> Sala : <<creates>>
+    SalaFactoryImpl ..> Sala : creates
 ```
 
 ---
@@ -171,11 +189,11 @@ classDiagram
 
     class ReservaRepository {
         <<Singleton>>
-        -instance: ReservaRepository$
+        -instance: ReservaRepository
         -reservas: List~Reserva~
         -salas: List~Sala~
         -ReservaRepository()
-        +getInstance() ReservaRepository$
+        +getInstance() ReservaRepository
         +salvar(r: Reserva) void
         +remover(id: String) boolean
         +buscarPorSala(salaId: String) List~Reserva~
@@ -210,7 +228,7 @@ classDiagram
 
 ---
 
-## 4. Padrão Strategy – Política de Reserva (RF-03)
+## 4. Padrão Strategy – Política de Reserva
 
 ```mermaid
 classDiagram
@@ -225,20 +243,17 @@ classDiagram
     class PrioridadeDocente {
         +validar(nova: Reserva, existentes: List~Reserva~) boolean
         +getDescricao() String
-        %% Professor pode sobrescrever reserva de aluno
     }
 
     class PrimeiroAChegar {
         +validar(nova: Reserva, existentes: List~Reserva~) boolean
         +getDescricao() String
-        %% Critério puramente cronológico
     }
 
     class LimitePorUsuario {
         -limiteHorasDia: int
         +validar(nova: Reserva, existentes: List~Reserva~) boolean
         +getDescricao() String
-        %% Impede monopolização
     }
 
     class ValidadorReserva {
@@ -256,7 +271,7 @@ classDiagram
 
 ---
 
-## 5. Padrão Observer – Notificações (RF-04)
+## 5. Padrão Observer – Notificações
 
 ```mermaid
 classDiagram
@@ -278,23 +293,19 @@ classDiagram
     class NotificacaoEmailObserver {
         -emailService: EmailService
         +update(evento: String, reserva: Reserva) void
-        %% Envia e-mail ao usuário
     }
 
     class NotificacaoPushObserver {
         +update(evento: String, reserva: Reserva) void
-        %% Notificação push mobile
     }
 
     class RelatorioServicoObserver {
         -relatorioRepo: RelatorioRepository
         +update(evento: String, reserva: Reserva) void
-        %% Registra evento para relatórios
     }
 
     class LogAuditoriaObserver {
         +update(evento: String, reserva: Reserva) void
-        %% Grava log de auditoria
     }
 
     class SistemaReservas {
@@ -315,9 +326,55 @@ classDiagram
 
 ---
 
+## 6. Padrão Decorator – Extensão de Recursos das Salas
+
+```mermaid
+classDiagram
+    direction TB
+
+    class Sala {
+        <<abstract>>
+        -id: String
+        -capacidade: int
+        +getNome() String
+        +getCapacidade() int
+    }
+
+    class SalaDecorator {
+        <<abstract>>
+        #sala: Sala
+        +SalaDecorator(sala: Sala)
+        +getNome() String
+        +getCapacidade() int
+    }
+
+    class ArCondicionadoDecorator {
+        +getNome() String
+    }
+
+    class BebedouroDecorator {
+        +getNome() String
+    }
+
+    class ProjetorDecorator {
+        +getNome() String
+    }
+
+    class AcessibilidadeDecorator {
+        +getNome() String
+    }
+
+    SalaDecorator --|> Sala : herda tipo
+    SalaDecorator o-- Sala : wrapping
+    ArCondicionadoDecorator --|> SalaDecorator
+    BebedouroDecorator --|> SalaDecorator
+    ProjetorDecorator --|> SalaDecorator
+    AcessibilidadeDecorator --|> SalaDecorator
+```
+
 ---
 
-## 6. Integração Completa – Fluxo Principal
+## 7. Integração Completa – Fluxo Principal
 
 ```mermaid
 classDiagram
@@ -328,15 +385,21 @@ classDiagram
         -repository: ReservaRepository
         -validador: ValidadorReserva
         -eventManager: EventManager
-        +criarReserva(salaId, userId, horario) Reserva
+        +criarReserva(salaId: String, userId: String, horario: LocalDateTime) Reserva
         +cancelarReserva(reservaId: String) void
-        +listarSalasDisponiveis(horario) List~Sala~
+        +listarSalasDisponiveis(horario: LocalDateTime) List~Sala~
         +alterarPolitica(p: PoliticaReserva) void
     }
 
     class SalaFactory {
         <<interface>>
         +criarSala(tipo: String) Sala
+    }
+
+    class SalaDecorator {
+        <<abstract>>
+        #sala: Sala
+        +getNome() String
     }
 
     class ReservaRepository {
@@ -354,25 +417,25 @@ classDiagram
 
     class PoliticaReserva {
         <<interface>>
-        +validar(nova, existentes) boolean
+        +validar(nova: Reserva, existentes: List~Reserva~) boolean
     }
 
     class EventManager {
         <<Subject>>
-        +subscribe(evento, observer) void
-        +notify(evento, reserva) void
+        +subscribe(evento: String, observer: ReservaObserver) void
+        +notify(evento: String, reserva: Reserva) void
     }
 
     class ReservaObserver {
         <<interface>>
-        +update(evento, reserva) void
+        +update(evento: String, reserva: Reserva) void
     }
 
-
-    SistemaReservas --> SalaFactory : cria salas
-    SistemaReservas --> ReservaRepository : persiste
-    SistemaReservas --> ValidadorReserva : valida
-    SistemaReservas --> EventManager : dispara eventos
+    SistemaReservas --> SalaFactory : 1. cria sala base
+    SistemaReservas --> SalaDecorator : 2. envolve com decorators
+    SistemaReservas --> ValidadorReserva : 3. valida
+    SistemaReservas --> ReservaRepository : 4. persiste
+    SistemaReservas --> EventManager : 5. dispara eventos
     ValidadorReserva o--> PoliticaReserva : estratégia
     EventManager o--> ReservaObserver : notifica
 ```
