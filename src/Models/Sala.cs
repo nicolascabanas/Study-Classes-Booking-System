@@ -8,5 +8,6 @@ namespace Study_Classes_Booking_System.src.Models
 
         public abstract string GetNome();
         public abstract int GetCapacidade();
+        public virtual double PrecoBase { get; set; } = 0.0;
     }
 }

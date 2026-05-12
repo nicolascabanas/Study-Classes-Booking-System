@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Study_Classes_Booking_System.src.Models;
 using Study_Classes_Booking_System.src.Observers;
+using Study_Classes_Booking_System.src.Services;
 
 namespace Study_Classes_Booking_System.src.Repositories
 {
@@ -24,7 +25,7 @@ namespace Study_Classes_Booking_System.src.Repositories
 			{
 				new SalaEstudoIndividual { Id = 1, Nome = "Sala Individual A1", PrecoBase = 20.0 },
 				new SalaTrabalhoGrupo { Id = 2, Nome = "Sala de Grupo B1", PrecoBase = 50.0 },
-				new LaboratorioInformatica { Id = 3, Nome = "Laboratório Lab 01", PrecoBase = 100.0 }
+				new LaboratorioInformatica { Id = 3, Nome = "Laboratï¿½rio Lab 01", PrecoBase = 100.0 }
 			};
 		}
 
@@ -78,18 +79,18 @@ namespace Study_Classes_Booking_System.src.Repositories
 			var reservasHoje = _reservas.Where(r => r.DataReserva.Date == hoje).ToList();
 
 			Console.WriteLine("\n==============================================");
-			Console.WriteLine($"   RELATÓRIO DE OCUPAÇÃO - {hoje:dd/MM/yyyy}");
+			Console.WriteLine($"   RELATï¿½RIO DE OCUPAï¿½ï¿½O - {hoje:dd/MM/yyyy}");
 			Console.WriteLine("==============================================");
 
 			if (!reservasHoje.Any())
 			{
-				Console.WriteLine("Nenhuma ocupação registrada para hoje.");
+				Console.WriteLine("Nenhuma ocupaï¿½ï¿½o registrada para hoje.");
 			}
 			else
 			{
 				foreach (var r in reservasHoje)
 				{
-					Console.WriteLine($"- Sala: {r.Sala.Nome.PadRight(20)} | Usuário: {r.Usuario.Nome}");
+					Console.WriteLine($"- Sala: {r.Sala.Nome.PadRight(20)} | Usuï¿½rio: {r.Usuario.Nome}");
 				}
 			}
 			Console.WriteLine("==============================================\n");

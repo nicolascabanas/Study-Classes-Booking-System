@@ -1,5 +1,6 @@
 using System;
 using Study_Classes_Booking_System.src.Observers;
+using Study_Classes_Booking_System.src.Models;
 
 namespace Study_Classes_Booking_System.src.Services
 {
